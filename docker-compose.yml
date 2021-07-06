@@ -1,0 +1,13 @@
+version: "3"
+services:
+    smtp_relay_server:
+        build:
+            context: ./smtp-relay
+        environment:
+            POSTFIX_HOSTNAME: "${POSTFIX_HOSTNAME}"
+            POSTFIX_RELAY_HOST: "${POSTFIX_RELAY_HOST}"
+            POSTFIX_RELAY_USER: "${POSTFIX_RELAY_USER}"
+            POSTFIX_RELAY_PASSWORD: "${POSTFIX_RELAY_PASSWORD}"
+    smtp_relay_test:
+        build:
+            context: ./smtp-relay-test
