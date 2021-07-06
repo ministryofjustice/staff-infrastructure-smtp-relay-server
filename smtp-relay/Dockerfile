@@ -1,4 +1,5 @@
-FROM alpine:latest
+ARG SHARED_SERVICES_ACCOUNT_ID
+FROM ${SHARED_SERVICES_ACCOUNT_ID}.dkr.ecr.eu-west-2.amazonaws.com/alpine:alpine-3-14-0
 
 RUN apk add --no-cache --update postfix bash && \
     apk add --no-cache --upgrade musl musl-utils && \

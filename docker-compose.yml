@@ -3,6 +3,8 @@ services:
     smtp_relay_server:
         build:
             context: ./smtp-relay
+            args: 
+                SHARED_SERVICES_ACCOUNT_ID: "${SHARED_SERVICES_ACCOUNT_ID}"
         environment:
             POSTFIX_HOSTNAME: "${POSTFIX_HOSTNAME}"
             POSTFIX_RELAY_HOST: "${POSTFIX_RELAY_HOST}"
@@ -11,3 +13,5 @@ services:
     smtp_relay_test:
         build:
             context: ./smtp-relay-test
+            args: 
+                SHARED_SERVICES_ACCOUNT_ID: "${SHARED_SERVICES_ACCOUNT_ID}"

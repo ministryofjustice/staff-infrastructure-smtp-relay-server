@@ -19,7 +19,7 @@ test: build-dev
 	$(DOCKER_COMPOSE) up -d smtp_relay_test
 
 build: check-container-registry-account-id
-	docker build -t docker_smtp_relay ./smtp-relay
+	docker build -t docker_smtp_relay ./smtp-relay --build-arg SHARED_SERVICES_ACCOUNT_ID
 
 build-nginx:
 	docker build -t nginx ./nginx --build-arg SHARED_SERVICES_ACCOUNT_ID
