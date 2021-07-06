@@ -10,4 +10,4 @@ phases:
     commands:
       - make authenticate-docker
       - make publish
-      - make deploy
+      - ./scripts/deploy.sh
