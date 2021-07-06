@@ -1,4 +1,4 @@
-include .env
+-include .env
 export
 
 DOCKER_COMPOSE = docker-compose -f docker-compose.yml
