@@ -21,7 +21,7 @@ postconf -e "maillog_file=/dev/stdout"
 postalias /etc/postfix/aliases
 
 # Disable local mail delivery
-postconf -e "mydestination="
+postconf -e "mydestination=localhost"
 
 # Limit message size to 10MB
 postconf -e "message_size_limit=10240000"
@@ -41,7 +41,7 @@ postconf -e "mynetworks=127.0.0.0/8,10.0.0.0/8,90.195.228.241/32,172.0.0.0/8"
 postconf -e myhostname=$POSTFIX_HOSTNAME
 
 # Do not relay mail from untrusted networks
-postconf -e "relay_domains=live.co.uk"
+postconf -e relay_domains=$mydestination
 
 # Relay configuration
 postconf -e relayhost=$POSTFIX_RELAY_HOST
@@ -51,7 +51,7 @@ postconf -e "smtp_sasl_auth_enable=yes"
 postconf -e "smtp_sasl_password_maps=lmdb:/etc/postfix/sasl_passwd"
 postconf -e "smtp_sasl_security_options=noanonymous"
 postconf -e "smtp_tls_security_level=may"
-postconf -e "smtpd_recipient_restrictions=reject_non_fqdn_recipient,reject_unknown_recipient_domain,permit_mynetworks,permit_sasl_authenticated"
+postconf -e "smtpd_recipient_restrictions=reject_non_fqdn_recipient,reject_unknown_recipient_domain,reject_unverified_recipient,permit_mynetworks,permit_sasl_authenticated"
 
 # Use 587 (submission)
 sed -i -r -e 's/^#submission/submission/' /etc/postfix/master.cf
