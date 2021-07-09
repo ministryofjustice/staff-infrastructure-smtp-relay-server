@@ -2,7 +2,7 @@ version: 0.1
 
 env:
   parameter-store:
-    SHARED_SERVICES_ACCOUNT_ID: /codebuild/staff_device_shared_services_account_id
+    SHARED_SERVICES_ACCOUNT_ID: "/codebuild/staff_device_shared_services_account_id"
     REGISTRY_URL: "/codebuild/pttp-ci-infrastructure-net-svcs-core-pipeline/$ENV/ecr/endpoint"
 
 phases:
