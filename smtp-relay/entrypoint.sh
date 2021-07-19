@@ -1,12 +1,6 @@
 #!/bin/bash
 set -e
 
-if [ -z "$POSTFIX_HOSTNAME" -a -z "$POSTFIX_RELAY_HOST" -a -z "$POSTFIX_RELAY_USER" -a -z "$POSTFIX_RELAY_PASSWORD" ]; then
-    echo >&2 'error: relay options are not specified '
-    echo >&2 '  You need to specify POSTFIX_HOSTNAME, POSTFIX_RELAY_HOST, POSTFIX_RELAY_USER and POSTFIX_RELAY_PASSWORD (or POSTFIX_RELAY_PASSWORD_FILE)'
-    exit 1
-fi
-
 # Create postfix folders
 mkdir -p /var/spool/postfix/
 mkdir -p /var/spool/postfix/pid
@@ -26,9 +20,6 @@ postconf -e "mydestination=localhost"
 # Limit message size to 10MB
 postconf -e "message_size_limit=10240000"
 
-# Sets smtp tls security needed for gmail
-
-
 # Reject invalid HELOs
 postconf -e "smtpd_delay_reject=yes"
 postconf -e "smtpd_helo_required=yes"
@@ -38,17 +29,22 @@ postconf -e "smtpd_helo_restrictions=permit_mynetworks,reject_invalid_helo_hostn
 postconf -e "mynetworks=127.0.0.0/8,10.0.0.0/8,90.195.228.241/32,172.0.0.0/8"
 
 # Set up hostname
-postconf -e myhostname=$POSTFIX_HOSTNAME
+postconf -e myhostname=$RELAY_DOMAIN
+postconf -e myorigin=$RELAY_DOMAIN
 
 # Do not relay mail from untrusted networks
-postconf -e relay_domains=$mydestination
+postconf -e relay_domains=$RELAY_DOMAIN
 
-# Relay configuration
-postconf -e relayhost=$POSTFIX_RELAY_HOST
-echo "$POSTFIX_RELAY_HOST $POSTFIX_RELAY_USER:$POSTFIX_RELAY_PASSWORD" >> /etc/postfix/sasl_passwd
-postmap lmdb:/etc/postfix/sasl_passwd
-postconf -e "smtp_sasl_auth_enable=yes"
-postconf -e "smtp_sasl_password_maps=lmdb:/etc/postfix/sasl_passwd"
+# If configuring this relay to relay against Gmail for test purposes, uncomment the next 4 lines and provide the username and password
+# echo "$POSTFIX_RELAY_HOST $POSTFIX_RELAY_USER:$POSTFIX_RELAY_PASSWORD" >> /etc/postfix/sasl_passwd
+# postmap lmdb:/etc/postfix/sasl_passwd
+# postconf -e "smtp_sasl_auth_enable=yes"
+# postconf -e "smtp_sasl_password_maps=lmdb:/etc/postfix/sasl_passwd"
+
+
+# Relay configuration for Office 365
+postconf -e "relayhost=$RELAY_SMART_HOST"
+postconf -e "smtp_sasl_auth_enable=no"
 postconf -e "smtp_sasl_security_options=noanonymous"
 postconf -e "smtp_tls_security_level=may"
 postconf -e "smtpd_recipient_restrictions=reject_non_fqdn_recipient,reject_unknown_recipient_domain,reject_unverified_recipient,permit_mynetworks,permit_sasl_authenticated"

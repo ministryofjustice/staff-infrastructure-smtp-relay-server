@@ -6,12 +6,13 @@ services:
             args: 
                 SHARED_SERVICES_ACCOUNT_ID: "${SHARED_SERVICES_ACCOUNT_ID}"
         environment:
-            POSTFIX_HOSTNAME: "${POSTFIX_HOSTNAME}"
-            POSTFIX_RELAY_HOST: "${POSTFIX_RELAY_HOST}"
-            POSTFIX_RELAY_USER: "${POSTFIX_RELAY_USER}"
-            POSTFIX_RELAY_PASSWORD: "${POSTFIX_RELAY_PASSWORD}"
+            RELAY_DOMAIN: "${RELAY_DOMAIN}"
+            RELAY_SMART_HOST: "${RELAY_SMART_HOST}"
     smtp_relay_test:
         build:
             context: ./smtp-relay-test
             args: 
                 SHARED_SERVICES_ACCOUNT_ID: "${SHARED_SERVICES_ACCOUNT_ID}"
+        environment:
+            TEST_EMAIL_ADDRESS: "${TEST_EMAIL_ADDRESS}"
+            MAILBOX_FOR_TEST_EMAIL: "${MAILBOX_FOR_TEST_EMAIL}"
