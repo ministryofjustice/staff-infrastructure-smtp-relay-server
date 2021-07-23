@@ -35,7 +35,7 @@ postconf -e "smtpd_helo_required=yes"
 postconf -e "smtpd_helo_restrictions=permit_mynetworks,reject_invalid_helo_hostname,permit"
 
 # Don't allow requests from outside
-postconf -e "mynetworks=127.0.0.0/8,10.0.0.0/8,90.195.228.241/32,172.0.0.0/8"
+postconf -e "mynetworks=127.0.0.0/8,10.0.0.0/8,90.195.228.241/32,172.0.0.0/8,10.184.102.0/24"
 
 # Set up hostname
 postconf -e myhostname=$POSTFIX_HOSTNAME
