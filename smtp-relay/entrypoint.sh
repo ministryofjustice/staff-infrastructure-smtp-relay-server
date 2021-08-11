@@ -41,13 +41,12 @@ postconf -e relay_domains=$RELAY_DOMAIN
 # postconf -e "smtp_sasl_auth_enable=yes"
 # postconf -e "smtp_sasl_password_maps=lmdb:/etc/postfix/sasl_passwd"
 
-
 # Relay configuration for Office 365
 postconf -e "relayhost=$RELAY_SMART_HOST"
 postconf -e "smtp_sasl_auth_enable=no"
 postconf -e "smtp_sasl_security_options=noanonymous"
 postconf -e "smtp_tls_security_level=may"
-postconf -e "smtpd_recipient_restrictions=reject_non_fqdn_recipient,reject_unknown_recipient_domain,reject_unverified_recipient,permit_mynetworks,permit_sasl_authenticated"
+postconf -e "smtpd_recipient_restrictions=permit_mynetworks,permit_sasl_authenticated"
 
 # Use 587 (submission)
 sed -i -r -e 's/^#submission/submission/' /etc/postfix/master.cf
