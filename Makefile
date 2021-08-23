@@ -15,7 +15,7 @@ build-dev:
 run: build-dev
 	$(DOCKER_COMPOSE) up -d smtp_relay_server
 
-test: build-dev
+test: run
 	$(DOCKER_COMPOSE) up -d smtp_relay_test
 
 build: check-container-registry-account-id

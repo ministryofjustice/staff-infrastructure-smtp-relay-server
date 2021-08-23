@@ -35,18 +35,21 @@ postconf -e myorigin=$RELAY_DOMAIN
 # Do not relay mail from untrusted networks
 postconf -e relay_domains=$RELAY_DOMAIN
 
-# If configuring this relay to relay against Gmail for test purposes, uncomment the next 4 lines and provide the username and password
-# echo "$POSTFIX_RELAY_HOST $POSTFIX_RELAY_USER:$POSTFIX_RELAY_PASSWORD" >> /etc/postfix/sasl_passwd
-# postmap lmdb:/etc/postfix/sasl_passwd
-# postconf -e "smtp_sasl_auth_enable=yes"
-# postconf -e "smtp_sasl_password_maps=lmdb:/etc/postfix/sasl_passwd"
-
-# Relay configuration for Office 365
-postconf -e "relayhost=$RELAY_SMART_HOST"
+# POSTFIX decurity config
 postconf -e "smtp_sasl_auth_enable=no"
+postconf -e "smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt"
 postconf -e "smtp_sasl_security_options=noanonymous"
-postconf -e "smtp_tls_security_level=may"
+postconf -e "smtp_use_tls=yes"
+postconf -e "smtp_tls_security_level=encrypt"
 postconf -e "smtpd_recipient_restrictions=permit_mynetworks,permit_sasl_authenticated"
+
+# Create a transport_maps
+echo "/.*@justice.gov.uk*/i relay:$O365_SMART_HOST" >> /etc/postfix/transport_maps
+echo "/.*@digital.justice.gov.uk*/i relay:$GOOGLE_SMTP_HOST" >> /etc/postfix/transport_maps
+# echo "* relay:$O365_SMART_HOST" >> /etc/postfix/transport_maps
+postmap lmdb:/etc/postfix/transport_maps
+
+postconf -e "transport_maps=lmdb:/etc/postfix/transport_maps"
 
 # Use 587 (submission)
 sed -i -r -e 's/^#submission/submission/' /etc/postfix/master.cf
