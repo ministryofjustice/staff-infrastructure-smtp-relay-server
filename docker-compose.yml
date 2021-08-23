@@ -1,4 +1,9 @@
 version: "3"
+
+volumes:
+    postfix-logs:
+    postfix-socket:
+
 services:
     smtp_relay_server:
         build:
@@ -9,6 +14,11 @@ services:
             RELAY_DOMAIN: "${RELAY_DOMAIN}"
             O365_SMART_HOST: "${O365_SMART_HOST}"
             GOOGLE_SMTP_HOST: "${GOOGLE_SMTP_HOST}"
+        volumes:
+            - postfix-logs:/var/log/mail
+            - postfix-socket:/var/spool/postfix
+        links:
+            - smtp_relay_monitoring
     smtp_relay_test:
         build:
             context: ./smtp-relay-test
@@ -19,3 +29,11 @@ services:
             O365_TEST_RECIPIENT_EMAIL_ADDRESS: "${O365_TEST_RECIPIENT_EMAIL_ADDRESS}"
             GOOGLE_TEST_SENDER_EMAIL_ADDRESS: "${GOOGLE_TEST_SENDER_EMAIL_ADDRESS}"
             GOOGLE_TEST_RECIPIENT_EMAIL_ADDRESS: "${GOOGLE_TEST_RECIPIENT_EMAIL_ADDRESS}"
+    smtp_relay_monitoring:
+        image: jacobbaungard/postfix_exporter
+        entrypoint: "/bin/postfix_exporter --postfix.logfile_path='/var/log/mail/postfix'"
+        ports:
+            - "9154:9154" # /metrics
+        volumes:
+            - postfix-logs:/var/log/mail
+            - postfix-socket:/var/spool/postfix
