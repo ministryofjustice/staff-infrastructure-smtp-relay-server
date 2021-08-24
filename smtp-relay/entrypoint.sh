@@ -46,7 +46,7 @@ postconf -e "smtpd_recipient_restrictions=permit_mynetworks,permit_sasl_authenti
 # Create a transport_maps
 echo "/.*@justice.gov.uk*/i relay:$O365_SMART_HOST" >> /etc/postfix/transport_maps
 echo "/.*@digital.justice.gov.uk*/i relay:$GOOGLE_SMTP_HOST" >> /etc/postfix/transport_maps
-# echo "* relay:$O365_SMART_HOST" >> /etc/postfix/transport_maps
+echo "/.@*/i* relay:$O365_SMART_HOST" >> /etc/postfix/transport_maps
 postmap lmdb:/etc/postfix/transport_maps
 
 postconf -e "transport_maps=lmdb:/etc/postfix/transport_maps"
