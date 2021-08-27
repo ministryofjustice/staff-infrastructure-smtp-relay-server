@@ -6,10 +6,9 @@ RUN apk add --no-cache --update postfix cyrus-sasl ca-certificates bash && \
     # Clean up
     (rm "/tmp/"* 2>/dev/null || true) && (rm -rf /var/cache/apk/* 2>/dev/null || true)
 
-VOLUME [ "/var/spool/postfix", "/etc/postfix", "/var/log/mail", "/var/spool/postfix" ]
+VOLUME [ "/var/spool/postfix", "/etc/postfix", "/var/log/mail" ]
 
 COPY entrypoint.sh /usr/local/bin/
-COPY postfix /var/log/mail/
 
 EXPOSE 587 25
 
