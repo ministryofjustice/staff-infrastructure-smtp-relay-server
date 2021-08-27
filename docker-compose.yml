@@ -8,7 +8,7 @@ services:
     smtp_relay_server:
         build:
             context: ./smtp-relay
-            args: 
+            args:
                 SHARED_SERVICES_ACCOUNT_ID: "${SHARED_SERVICES_ACCOUNT_ID}"
         environment:
             RELAY_DOMAIN: "${RELAY_DOMAIN}"
@@ -22,7 +22,7 @@ services:
     smtp_relay_test:
         build:
             context: ./smtp-relay-test
-            args: 
+            args:
                 SHARED_SERVICES_ACCOUNT_ID: "${SHARED_SERVICES_ACCOUNT_ID}"
         environment:
             O365_TEST_SENDER_EMAIL_ADDRESS: "${O365_TEST_SENDER_EMAIL_ADDRESS}"
@@ -30,10 +30,8 @@ services:
             GOOGLE_TEST_SENDER_EMAIL_ADDRESS: "${GOOGLE_TEST_SENDER_EMAIL_ADDRESS}"
             GOOGLE_TEST_RECIPIENT_EMAIL_ADDRESS: "${GOOGLE_TEST_RECIPIENT_EMAIL_ADDRESS}"
     smtp_relay_monitoring:
-        image: jacobbaungard/postfix_exporter
-        entrypoint: "/bin/postfix_exporter --postfix.logfile_path='/var/log/mail/postfix'"
-        ports:
-            - "9154:9154" # /metrics
+        build:
+            context: ./smtp-relay-monitoring
         volumes:
             - postfix-logs:/var/log/mail
             - postfix-socket:/var/spool/postfix
