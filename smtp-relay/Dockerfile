@@ -13,5 +13,3 @@ COPY entrypoint.sh /usr/local/bin/
 EXPOSE 587 25
 
 ENTRYPOINT ["entrypoint.sh"]
-
-CMD ["postfix", "start-fg" ]
