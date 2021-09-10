@@ -9,7 +9,7 @@ mkdir -p /var/spool/postfix/pid
 postconf -e "smtputf8_enable=no"
 
 # Log to stdout
-postconf -e "maillog_file=/dev/stdout"
+postconf -e "maillog_file=/var/log/mail/postfix"
 
 # Update aliases database. It's not used, but postfix complains if the .db file is missing
 postalias /etc/postfix/aliases

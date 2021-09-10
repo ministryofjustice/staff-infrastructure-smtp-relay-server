@@ -24,6 +24,9 @@ build: check-container-registry-account-id
 build-nginx:
 	docker build -t nginx ./nginx --build-arg SHARED_SERVICES_ACCOUNT_ID
 
+build-postfix-exporter:
+	docker build -t docker_smtp_relay_monitoring ./smtp-relay-monitoring  --build-arg SHARED_SERVICES_ACCOUNT_ID
+
 push:
 	echo ${REGISTRY_URL}
 	aws ecr get-login-password | docker login --username AWS --password-stdin ${REGISTRY_URL}
@@ -35,7 +38,14 @@ push-nginx:
 	docker tag nginx:latest ${REGISTRY_URL}/staff-infrastructure-${ENV}-smtp-relay-nginx:latest
 	docker push ${REGISTRY_URL}/staff-infrastructure-${ENV}-smtp-relay-nginx:latest
 
-publish: build push build-nginx push-nginx
+push-postfix-exporter:
+	echo ${REGISTRY_URL}
+	aws ecr get-login-password | docker login --username AWS --password-stdin ${REGISTRY_URL}
+	docker tag docker_smtp_relay_monitoring:latest ${REGISTRY_URL}/staff-infrastructure-${ENV}-smtp-relay-monitoring:latest
+	docker push ${REGISTRY_URL}/staff-infrastructure-${ENV}-smtp-relay-monitoring:latest
+
+
+publish: build push build-nginx push-nginx build-postfix-exporter push-postfix-exporter
 
 deploy:
 	aws-vault exec $$AWS_VAULT_PROFILE --no-session -- ./scripts/deploy.sh
