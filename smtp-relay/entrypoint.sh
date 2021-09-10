@@ -8,7 +8,7 @@ mkdir -p /var/spool/postfix/pid
 # Disable SMTPUTF8, because libraries (ICU) are missing in Alpine
 postconf -e "smtputf8_enable=no"
 
-# Log to stdout
+# Log to file. Tail the logs to STDOUT below
 postconf -e "maillog_file=/var/log/mail/postfix"
 
 # Update aliases database. It's not used, but postfix complains if the .db file is missing
@@ -59,3 +59,6 @@ echo 'postfix configured. Ready for start up.'
 echo
 
 exec "$@"
+
+exec postfix start-fg & sleep 2 # give postfix time to create the newest log
+exec tail -f /var/log/mail/postfix
