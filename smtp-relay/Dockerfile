@@ -10,6 +10,6 @@ VOLUME [ "/var/spool/postfix", "/etc/postfix", "/var/log/mail" ]
 
 COPY entrypoint.sh /usr/local/bin/
 
-EXPOSE 587 25
+EXPOSE 25
 
 ENTRYPOINT ["entrypoint.sh"]

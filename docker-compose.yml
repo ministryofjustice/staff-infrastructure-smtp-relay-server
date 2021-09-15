@@ -13,7 +13,6 @@ services:
         environment:
             RELAY_DOMAIN: "${RELAY_DOMAIN}"
             O365_SMART_HOST: "${O365_SMART_HOST}"
-            GOOGLE_SMTP_HOST: "${GOOGLE_SMTP_HOST}"
         volumes:
             - postfix-logs:/var/log/mail
             - postfix-socket:/var/spool/postfix
@@ -25,9 +24,8 @@ services:
             args:
                 SHARED_SERVICES_ACCOUNT_ID: "${SHARED_SERVICES_ACCOUNT_ID}"
         environment:
-            O365_TEST_SENDER_EMAIL_ADDRESS: "${O365_TEST_SENDER_EMAIL_ADDRESS}"
+            TEST_SENDER_EMAIL_ADDRESS: "${TEST_SENDER_EMAIL_ADDRESS}"
             O365_TEST_RECIPIENT_EMAIL_ADDRESS: "${O365_TEST_RECIPIENT_EMAIL_ADDRESS}"
-            GOOGLE_TEST_SENDER_EMAIL_ADDRESS: "${GOOGLE_TEST_SENDER_EMAIL_ADDRESS}"
             GOOGLE_TEST_RECIPIENT_EMAIL_ADDRESS: "${GOOGLE_TEST_RECIPIENT_EMAIL_ADDRESS}"
             OTHER_TEST_RECIPIENT_EMAIL_ADDRESS: "${OTHER_TEST_RECIPIENT_EMAIL_ADDRESS}"
     smtp_relay_monitoring:
