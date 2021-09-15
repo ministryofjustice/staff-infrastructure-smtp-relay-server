@@ -44,7 +44,6 @@ push-postfix-exporter:
 	docker tag docker_smtp_relay_monitoring:latest ${REGISTRY_URL}/staff-infrastructure-${ENV}-smtp-relay-monitoring:latest
 	docker push ${REGISTRY_URL}/staff-infrastructure-${ENV}-smtp-relay-monitoring:latest
 
-
 publish: build push build-nginx push-nginx build-postfix-exporter push-postfix-exporter
 
 deploy:
