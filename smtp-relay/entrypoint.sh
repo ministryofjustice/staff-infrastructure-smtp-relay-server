@@ -1,16 +1,12 @@
 #!/bin/bash
 set -e
 
-# set the development namespace
-HOSTNAME="smtp-relay"
-if [ "$ENV" = "development" ]; then
-        HOSTNAME="smtp-relay"
-elif [ "$ENV" = "pre-production" ]; then
-        HOSTNAME="smtp-relay"
-elif [ "$ENV" = "production" ]; then
-        HOSTNAME="smtp-relay"
-else
+# create a HOSTNAME based on the environment
+if [ $ENV != "development" ] && [ $ENV != "pre-production" ] && [ $ENV != "production" ];
+then
         HOSTNAME="$ENV-smtp-relay"
+else
+        HOSTNAME="smtp-relay"
 fi
 
 # Create postfix folders
@@ -31,7 +27,7 @@ postconf -e "myhostname = $HOSTNAME.$PUBLIC_DNS_ZONE_NAME_STAFF_SERVICE"
 postconf -e "mydomain = $RELAY_DOMAIN"
 postconf -e "myorigin = $RELAY_DOMAIN"
 postconf -e "relay_domains = $RELAY_DOMAIN"
-postconf -e "mydestination = postfix.$RELAY_DOMAIN, $RELAY_DOMAIN"
+postconf -e "mydestination = $HOSTNAME.$PUBLIC_DNS_ZONE_NAME_STAFF_SERVICE, $RELAY_DOMAIN"
 
 # Create transport mapping
 echo "$RELAY_DOMAIN relay:[$O365_SMART_HOST]" >> /etc/postfix/transport_maps
@@ -63,7 +59,7 @@ postconf -e "remote_header_rewrite_domain = $RELAY_DOMAIN"
 postconf -e "append_dot_mydomain = yes"
 
 # Create sender canonical address mapping
-echo "postfix@example.com postfix@$RELAY_DOMAIN" >> /etc/postfix/sender_canonical
+echo "$HOSTNAME@$PUBLIC_DNS_ZONE_NAME_STAFF_SERVICE $HOSTNAME@$RELAY_DOMAIN" >> /etc/postfix/sender_canonical
 postmap lmdb:/etc/postfix/sender_canonical
 postconf -e "sender_canonical_maps = lmdb:/etc/postfix/sender_canonical"
 
