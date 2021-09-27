@@ -1,6 +1,18 @@
 #!/bin/bash
 set -e
 
+# set the development namespace
+HOSTNAME="smtp-relay"
+if [ "$ENV" = "development" ]; then
+        HOSTNAME="smtp-relay"
+elif [ "$ENV" = "pre-production" ]; then
+        HOSTNAME="smtp-relay"
+elif [ "$ENV" = "production" ]; then
+        HOSTNAME="smtp-relay"
+else
+        HOSTNAME="$ENV-smtp-relay"
+fi
+
 # Create postfix folders
 mkdir -p /var/spool/postfix/
 mkdir -p /var/spool/postfix/pid
@@ -15,7 +27,7 @@ postconf -e "maillog_file = /var/log/mail/postfix"
 postalias /etc/postfix/aliases
 
 # All about domains
-postconf -e "myhostname = postfix.$RELAY_DOMAIN"
+postconf -e "myhostname = $HOSTNAME.$PUBLIC_DNS_ZONE_NAME_STAFF_SERVICE"
 postconf -e "mydomain = $RELAY_DOMAIN"
 postconf -e "myorigin = $RELAY_DOMAIN"
 postconf -e "relay_domains = $RELAY_DOMAIN"
