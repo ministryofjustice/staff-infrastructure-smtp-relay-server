@@ -11,6 +11,8 @@ services:
             args:
                 SHARED_SERVICES_ACCOUNT_ID: "${SHARED_SERVICES_ACCOUNT_ID}"
         environment:
+            ENV: "${ENV}"
+            PUBLIC_DNS_ZONE_NAME_STAFF_SERVICE: "${PUBLIC_DNS_ZONE_NAME_STAFF_SERVICE}"
             RELAY_DOMAIN: "${RELAY_DOMAIN}"
             O365_SMART_HOST: "${O365_SMART_HOST}"
         volumes:
