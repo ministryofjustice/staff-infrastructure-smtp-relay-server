@@ -1,7 +1,37 @@
 # Staff Infrastructure SMTP Relay Server
 
-This repo contains the infrastucture for the SMTP Relay server which allows unauthenticated email to be sent from devices which do not have the ability to use authentication.
+This repo builds the docker image for the SMTP Relay server and pushes it to the Shared Services Elastic Container Repository, so that the pre-configured ECS task can pull down this image and launch a new container.
 ## Getting Started
+
+### Setting up your development environment 
+
+1. Copy `.env.example` to `.env`.
+
+```shell
+$ cp .env.example .env
+```
+
+2. Modify the `.env` file and replace all necessary values.  
+
+3. Now build your development environment by running:
+```shell
+make build-dev
+```
+
+4. Deploy the environment by running:
+```shell
+make deploy
+```
+
+### Running Local Test
+To send a test email using your local environment with the email addresses specified in your .ENV file run: 
+```shell
+make test
+```
+
+### Stopping Local Environment
+
+Once you have finished using the docker image run ```make stop``` to shut down the environment.
 
 ### Authenticating Docker with AWS ECR
 
