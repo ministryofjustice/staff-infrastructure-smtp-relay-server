@@ -1,0 +1,7 @@
+smtp-rely:
+  - '**'
+
+documentation:
+  - "diagrams/**"
+  - "documentation/**"
+  - "README.md"
