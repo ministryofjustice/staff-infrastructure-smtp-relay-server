@@ -8,8 +8,6 @@ services:
     smtp_relay_server:
         build:
             context: ./smtp-relay
-            args:
-                SHARED_SERVICES_ACCOUNT_ID: "${SHARED_SERVICES_ACCOUNT_ID}"
         environment:
             ENV: "${ENV}"
             PUBLIC_DNS_ZONE_NAME_STAFF_SERVICE: "${PUBLIC_DNS_ZONE_NAME_STAFF_SERVICE}"
@@ -23,8 +21,6 @@ services:
     smtp_relay_test:
         build:
             context: ./smtp-relay-test
-            args:
-                SHARED_SERVICES_ACCOUNT_ID: "${SHARED_SERVICES_ACCOUNT_ID}"
         environment:
             TEST_SENDER_EMAIL_ADDRESS: "${TEST_SENDER_EMAIL_ADDRESS}"
             O365_TEST_RECIPIENT_EMAIL_ADDRESS: "${O365_TEST_RECIPIENT_EMAIL_ADDRESS}"
