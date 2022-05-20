@@ -5,9 +5,6 @@ DOCKER_COMPOSE = docker-compose -f docker-compose.yml
 
 authenticate-docker:
 	./scripts/authenticate_docker.sh
-	
-check-container-registry-account-id:
-	./scripts/check_container_registry_account_id.sh
 
 build-dev:
 	$(DOCKER_COMPOSE) build
@@ -18,14 +15,14 @@ run: build-dev
 test: run
 	$(DOCKER_COMPOSE) up -d smtp_relay_test
 
-build: check-container-registry-account-id
-	docker build -t docker_smtp_relay ./smtp-relay --build-arg SHARED_SERVICES_ACCOUNT_ID
+build:
+	docker build -t docker_smtp_relay ./smtp-relay
 
 build-nginx:
-	docker build -t nginx ./nginx --build-arg SHARED_SERVICES_ACCOUNT_ID
+	docker build -t nginx ./nginx
 
 build-postfix-exporter:
-	docker build -t docker_smtp_relay_monitoring ./smtp-relay-monitoring  --build-arg SHARED_SERVICES_ACCOUNT_ID
+	docker build -t docker_smtp_relay_monitoring ./smtp-relay-monitoring
 
 push:
 	echo ${REGISTRY_URL}
