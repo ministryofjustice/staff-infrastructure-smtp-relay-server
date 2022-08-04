@@ -51,7 +51,7 @@ postconf -e "smtp_use_tls = yes"
 postconf -e "smtp_tls_security_level = encrypt"
 
 # Limit message size to 25MB
-postconf -e "message_size_limit = 25000000"
+postconf -e "message_size_limit = 100000000"
 
 # Sender address rewriting
 postconf -e "masquerade_domains = $RELAY_DOMAIN"
