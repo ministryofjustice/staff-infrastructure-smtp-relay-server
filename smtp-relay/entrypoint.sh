@@ -51,7 +51,7 @@ postconf -e "smtp_use_tls = yes"
 postconf -e "smtp_tls_security_level = encrypt"
 
 # Limit message size to ~50MB 
-# ExchangeOnline is 35Mb and Google Workspace 100Mb
+# ExchangeOnline is 35Mb and Google Workspace 50Mb
 postconf -e "message_size_limit = 50000000"
 
 # Sender address rewriting
