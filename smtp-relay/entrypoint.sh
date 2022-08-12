@@ -38,7 +38,8 @@ postconf -e "transport_maps = lmdb:/etc/postfix/transport_maps"
 postconf -e "local_recipient_maps ="
 
 # IP ranges that are allowed to relay messages through this server
-postconf -e "mynetworks = 127.0.0.0/8, 172.0.0.0/8, 51.149.250.191/32, 86.142.44.41/32, 10.0.0.0/8"
+#  13.40.249.195/32 AWS NOC
+postconf -e "mynetworks = 127.0.0.0/8, 172.0.0.0/8, 51.149.250.191/32, 13.40.249.195/32, 86.142.44.41/32, 10.0.0.0/8"
 
 # All about security
 postconf -e "smtpd_delay_reject = yes"
