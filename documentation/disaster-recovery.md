@@ -2,7 +2,7 @@
 
 *It is recommended to roll forward with a fix than to roll back. If a rollback is still required, follow the steps in this guide*
 
-The SMTP service has no persistent data which means that the code which is stored in the repositories is all thats needed to bring the service back online.
+The SMTP service has no persistent data which means that the code which is stored in the repositories is all that is needed to bring the service back online.
 
 ## Prerequisites
 
