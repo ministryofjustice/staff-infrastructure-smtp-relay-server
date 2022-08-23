@@ -18,4 +18,4 @@ We first need to deploy the underlying AWS infrastructure, we can follow the [Ho
 
 
 ### 2. Restore the postfix server
-Once the AWS infrastructure is deployed we can restore the Postfix SMTP server container into ECS Fargate by following the [Deploy SMTP Relay Server](https://github.com/ministryofjustice/staff-infrastructure-smtp-relay-server)
+Once the AWS infrastructure is deployed, restore the Postfix SMTP server container into ECS Fargate by following the [Deploy SMTP Relay Server](https://github.com/ministryofjustice/staff-infrastructure-smtp-relay-server) guide.
