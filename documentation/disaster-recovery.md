@@ -14,7 +14,7 @@ The SMTP service has no persistent data which means that the code which is store
 In the event that Grafana has alerted on a disaster scenario, find we can follow the below guides to restore service.
 
 ### 1. Restore the ECS infrastructure
-We first need to deploy the underlying AWS infrastructure, we can follow the [How to deploy the Infrastructure](https://github.com/ministryofjustice/staff-infrastructure-network-services/blob/main/documentation/how-to-deploy-the-infrastructure.md) to get this up and running.
+Deploy the underlying AWS infrastructure by following the [How to deploy the Infrastructure](https://github.com/ministryofjustice/staff-infrastructure-network-services/blob/main/documentation/how-to-deploy-the-infrastructure.md) guide.
 
 
 ### 2. Restore the postfix server
