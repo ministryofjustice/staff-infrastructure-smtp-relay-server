@@ -13,9 +13,12 @@ services:
             PUBLIC_DNS_ZONE_NAME_STAFF_SERVICE: "${PUBLIC_DNS_ZONE_NAME_STAFF_SERVICE}"
             RELAY_DOMAIN: "${RELAY_DOMAIN}"
             O365_SMART_HOST: "${O365_SMART_HOST}"
+            IP_ALLOWED_LIST: "${IP_ALLOWED_LIST}"
         volumes:
             - postfix-logs:/var/log/mail
             - postfix-socket:/var/spool/postfix
+        ports:
+            - 25:25
         links:
             - smtp_relay_monitoring
     smtp_relay_test:
