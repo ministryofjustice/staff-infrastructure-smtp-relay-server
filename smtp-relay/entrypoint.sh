@@ -37,8 +37,7 @@ postconf -e "transport_maps = lmdb:/etc/postfix/transport_maps"
 # Disable local recipients checks
 postconf -e "local_recipient_maps ="
 
-# IP ranges that are allowed to relay messages through this server
-# 13.40.249.195/32 AWS NOC
+# IP ranges that are allowed to relay messages through this server (maintained in AWS SS Parameter Store)
 postconf -e "mynetworks = $IP_ALLOWED_LIST"
 
 # All about security
