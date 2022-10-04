@@ -37,14 +37,13 @@ postconf -e "transport_maps = lmdb:/etc/postfix/transport_maps"
 # Disable local recipients checks
 postconf -e "local_recipient_maps ="
 
-# IP ranges that are allowed to relay messages through this server
-#  13.40.249.195/32 AWS NOC
-postconf -e "mynetworks = 127.0.0.0/8, 172.0.0.0/8, 51.149.250.191/32, 13.40.249.195/32, 86.142.44.41/32, 10.0.0.0/8"
+# IP ranges that are allowed to relay messages through this server (maintained in AWS SS Parameter Store)
+postconf -e "mynetworks = $IP_ALLOWED_LIST"
 
 # All about security
 postconf -e "smtpd_delay_reject = yes"
 postconf -e "smtpd_helo_required = yes"
-postconf -e "smtpd_helo_restrictions = permit_mynetworks, reject_invalid_helo_hostname, permit"
+postconf -e "smtpd_relay_restrictions = permit_mynetworks, reject"
 postconf -e "smtp_sasl_auth_enable = no"
 postconf -e "smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt"
 postconf -e "smtp_sasl_security_options = noanonymous"

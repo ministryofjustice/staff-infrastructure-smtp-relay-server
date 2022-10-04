@@ -4,6 +4,7 @@ volumes:
     postfix-logs:
     postfix-socket:
 
+
 services:
     smtp_relay_server:
         build:
@@ -13,11 +14,17 @@ services:
             PUBLIC_DNS_ZONE_NAME_STAFF_SERVICE: "${PUBLIC_DNS_ZONE_NAME_STAFF_SERVICE}"
             RELAY_DOMAIN: "${RELAY_DOMAIN}"
             O365_SMART_HOST: "${O365_SMART_HOST}"
+            IP_ALLOWED_LIST: "${IP_ALLOWED_LIST}"
         volumes:
             - postfix-logs:/var/log/mail
             - postfix-socket:/var/spool/postfix
         links:
             - smtp_relay_monitoring
+        networks:
+            known:
+                ipv4_address: 172.16.0.10
+            unknown:
+                ipv4_address: 172.16.1.10
     smtp_relay_test:
         build:
             context: ./smtp-relay-test
@@ -26,9 +33,26 @@ services:
             O365_TEST_RECIPIENT_EMAIL_ADDRESS: "${O365_TEST_RECIPIENT_EMAIL_ADDRESS}"
             GOOGLE_TEST_RECIPIENT_EMAIL_ADDRESS: "${GOOGLE_TEST_RECIPIENT_EMAIL_ADDRESS}"
             OTHER_TEST_RECIPIENT_EMAIL_ADDRESS: "${OTHER_TEST_RECIPIENT_EMAIL_ADDRESS}"
+        networks:
+            - known
+            - unknown
     smtp_relay_monitoring:
         build:
             context: ./smtp-relay-monitoring
         volumes:
             - postfix-logs:/var/log/mail
             - postfix-socket:/var/spool/postfix
+        networks:
+            - known
+
+networks:
+    known:
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.16.0.0/24
+    unknown:
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.16.1.0/24

@@ -15,6 +15,9 @@ run: build-dev
 test: run
 	$(DOCKER_COMPOSE) up -d smtp_relay_test
 
+test-shell: run
+	$(DOCKER_COMPOSE) run --rm smtp_relay_test sh
+
 build:
 	docker build -t docker_smtp_relay ./smtp-relay
 
