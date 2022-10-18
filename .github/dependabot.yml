@@ -6,6 +6,16 @@
 version: 2
 updates:
   - package-ecosystem: "docker"
-    directory: "/"
+    directory: "/smtp-relay"
+    schedule:
+      interval: "daily"
+  
+  - package-ecosystem: "docker"
+    directory: "/smtp-relay-monitoring"
+    schedule:
+      interval: "daily"
+    
+  - package-ecosystem: "docker"
+    directory: "/smtp-relay-test"
     schedule:
       interval: "daily"
