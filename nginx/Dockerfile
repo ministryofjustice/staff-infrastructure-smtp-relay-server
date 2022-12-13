@@ -1,1 +1,1 @@
-FROM nginx:stable
+FROM nginx:latest
