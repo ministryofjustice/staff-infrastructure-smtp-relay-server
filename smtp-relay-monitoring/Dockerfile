@@ -1,4 +1,4 @@
-FROM jacobbaungard/postfix_exporter:latest
+FROM unikum/postfix_exporter:latest
 
 VOLUME [ "/var/log/mail", "/var/spool/postfix" ]
 
