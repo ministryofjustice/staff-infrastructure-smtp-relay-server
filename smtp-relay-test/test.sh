@@ -1,6 +1,4 @@
 #!/bin/bash
-
-# Mitch Test Change
 set -e
 
 smtp_relay_client_known_from_range="172.16.0.10"
