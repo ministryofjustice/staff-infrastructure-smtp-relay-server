@@ -1,4 +1,4 @@
-FROM alpine:3.18.2
+FROM alpine:3.14.0
 
 RUN apk add --no-cache --update postfix cyrus-sasl ca-certificates bash && \
     apk add --no-cache --upgrade musl musl-utils && \
