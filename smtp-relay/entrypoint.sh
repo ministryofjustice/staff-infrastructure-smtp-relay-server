@@ -61,7 +61,6 @@ postconf -e "append_dot_mydomain = yes"
 
 # Create sender canonical address mapping
 echo "$HOSTNAME@$PUBLIC_DNS_ZONE_NAME_STAFF_SERVICE $HOSTNAME@$RELAY_DOMAIN" >> /etc/postfix/sender_canonical
-echo "$HOSTNAME@ip-10-180-104-23.eu-west-2.compute.internal $HOSTNAME@$RELAY_DOMAIN" >> /etc/postfix/sender_canonical # temporary address mapping to test in development environment
 postmap lmdb:/etc/postfix/sender_canonical
 postconf -e "sender_canonical_maps = lmdb:/etc/postfix/sender_canonical"
 
