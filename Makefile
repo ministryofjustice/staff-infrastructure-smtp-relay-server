@@ -1,53 +1,100 @@
+#!make
+.DEFAULT_GOAL := help
+SHELL := '/bin/bash'
+
+CURRENT_TIME := `date "+%Y.%m.%d-%H.%M.%S"`
+
+LOCAL_IMAGE := ministryofjustice/nvvs/terraforms:latest
+DOCKER_IMAGE := ghcr.io/ministryofjustice/nvvs/terraforms:latest
+
+DOCKER_RUN_IT := @docker run --rm -it \
+				--env-file <(aws-vault exec $$AWS_PROFILE -- env | grep ^AWS_) \
+				-v `pwd`:/data \
+				--workdir /data \
+				--platform linux/amd64 \
+				$(DOCKER_IMAGE)
+
+export DOCKER_DEFAULT_PLATFORM=linux/amd64
+
 -include .env
 export
 
 DOCKER_COMPOSE = docker-compose -f docker-compose.yml
 
-authenticate-docker:
+.PHONY: authenticate-docker
+authenticate-docker: ## authenticate with repository
 	./scripts/authenticate_docker.sh
 
-build-dev:
+.PHONY: build-dev
+build-dev: ## build-dev containers
 	$(DOCKER_COMPOSE) build
 
-run: build-dev
+.PHONY: run
+run: ## run smtp_relay_server
+	build-dev
 	$(DOCKER_COMPOSE) up -d smtp_relay_server
 
-test: run
+.PHONY: test
+test: ## run tests
+	run
 	$(DOCKER_COMPOSE) up -d smtp_relay_test
 
-test-shell: run
+.PHONY: test-shell
+test-shell: ## shell into test container
+	run
 	$(DOCKER_COMPOSE) run --rm smtp_relay_test sh
 
-build:
+.PHONY: build
+build: ## build smtp-relay container
 	docker build -t docker_smtp_relay ./smtp-relay
 
-build-nginx:
+.PHONY: build-nginx
+build-nginx: ## build nginx container
 	docker build -t nginx ./nginx
 
-build-postfix-exporter:
+.PHONY: build-postfix-exporter
+build-postfix-exporter: ## build smtp-relay-monitoring postfix-exporter container
 	docker build -t docker_smtp_relay_monitoring ./smtp-relay-monitoring
 
-push:
+.PHONY: push
+push: ## push smtp-relay container image
 	echo ${REGISTRY_URL}
 	aws ecr get-login-password | docker login --username AWS --password-stdin ${REGISTRY_URL}
 	docker tag docker_smtp_relay:latest ${REGISTRY_URL}/staff-infrastructure-${ENV}-smtp-relay:latest
 	docker push ${REGISTRY_URL}/staff-infrastructure-${ENV}-smtp-relay:latest
 
-push-nginx:
+.PHONY: push-nginx
+push-nginx: ## push smtp-relay-nginx container image
 	aws ecr get-login-password | docker login --username AWS --password-stdin ${REGISTRY_URL}
 	docker tag nginx:latest ${REGISTRY_URL}/staff-infrastructure-${ENV}-smtp-relay-nginx:latest
 	docker push ${REGISTRY_URL}/staff-infrastructure-${ENV}-smtp-relay-nginx:latest
 
-push-postfix-exporter:
+.PHONY: push-postfix-exporter
+push-postfix-exporter: ## push smtp-relay-monitoring postfix-exporter container image
 	echo ${REGISTRY_URL}
 	aws ecr get-login-password | docker login --username AWS --password-stdin ${REGISTRY_URL}
 	docker tag docker_smtp_relay_monitoring:latest ${REGISTRY_URL}/staff-infrastructure-${ENV}-smtp-relay-monitoring:latest
 	docker push ${REGISTRY_URL}/staff-infrastructure-${ENV}-smtp-relay-monitoring:latest
 
-publish: build push build-nginx push-nginx build-postfix-exporter push-postfix-exporter
+.PHONY: publish
+publish: ## publish container images
+	build push build-nginx push-nginx build-postfix-exporter push-postfix-exporter
 
-deploy:
+.PHONY: deploy
+deploy: ## stop
 	aws-vault exec $$AWS_VAULT_PROFILE --no-session -- ./scripts/deploy.sh
 
-stop:
+.PHONY: stop
+stop: ## stop
 	$(DOCKER_COMPOSE) down -v
+
+.PHONY: clean
+clean: ## clean env file
+	rm -rf .env
+
+.PHONY: gen-env
+gen-env: ## generate a ".env" file with the correct env vars for the environment e.g. (make gen-env ENV_ARGUMENT=pre-production)
+	$(DOCKER_RUN) /bin/bash -c "./scripts/generate-env-file.sh $$ENV_ARGUMENT"
+
+help:
+	@grep -h -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
