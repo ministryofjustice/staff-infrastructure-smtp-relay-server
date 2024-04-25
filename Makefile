@@ -1,5 +1,6 @@
 #!make
 .DEFAULT_GOAL := help
+SHELL := '/bin/bash'
 
 CURRENT_TIME := `date "+%Y.%m.%d-%H.%M.%S"`
 
@@ -30,17 +31,17 @@ build-dev: ## build-dev containers
 
 .PHONY: run
 run: ## run smtp_relay_server
-	build-dev
+	$(MAKE) build-dev
 	$(DOCKER_COMPOSE) up -d smtp_relay_server
 
 .PHONY: test
 test: ## run tests
-	run
+	$(MAKE) run
 	$(DOCKER_COMPOSE) up -d smtp_relay_test
 
 .PHONY: test-shell
 test-shell: ## shell into test container
-	run
+	$(MAKE) run
 	$(DOCKER_COMPOSE) run --rm smtp_relay_test sh
 
 .PHONY: build
@@ -77,7 +78,12 @@ push-postfix-exporter: ## push smtp-relay-monitoring postfix-exporter container 
 
 .PHONY: publish
 publish: ## publish container images
-	build push build-nginx push-nginx build-postfix-exporter push-postfix-exporter
+	$(MAKE) build
+	$(MAKE) push
+	$(MAKE) build-nginx
+	$(MAKE) push-nginx
+	$(MAKE) build-postfix-exporter
+	$(MAKE) push-postfix-exporter
 
 .PHONY: deploy
 deploy: ## stop
