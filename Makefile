@@ -1,6 +1,5 @@
 #!make
 .DEFAULT_GOAL := help
-SHELL := '/bin/bash'
 
 CURRENT_TIME := `date "+%Y.%m.%d-%H.%M.%S"`
 
