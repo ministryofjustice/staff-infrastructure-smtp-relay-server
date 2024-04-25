@@ -1,5 +1,6 @@
 #!make
 .DEFAULT_GOAL := help
+SHELL := '/bin/bash'
 
 CURRENT_TIME := `date "+%Y.%m.%d-%H.%M.%S"`
 
@@ -77,7 +78,12 @@ push-postfix-exporter: ## push smtp-relay-monitoring postfix-exporter container 
 
 .PHONY: publish
 publish: ## publish container images
-	build push build-nginx push-nginx build-postfix-exporter push-postfix-exporter
+	$(MAKE) build
+	$(MAKE) push
+	$(MAKE) build-nginx
+	$(MAKE) push-nginx
+	$(MAKE) build-postfix-exporter
+	$(MAKE) push-postfix-exporter
 
 .PHONY: deploy
 deploy: ## stop
