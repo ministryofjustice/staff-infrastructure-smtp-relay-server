@@ -31,17 +31,17 @@ build-dev: ## build-dev containers
 
 .PHONY: run
 run: ## run smtp_relay_server
-	build-dev
+	$(MAKE) build-dev
 	$(DOCKER_COMPOSE) up -d smtp_relay_server
 
 .PHONY: test
 test: ## run tests
-	run
+	$(MAKE) run
 	$(DOCKER_COMPOSE) up -d smtp_relay_test
 
 .PHONY: test-shell
 test-shell: ## shell into test container
-	run
+	$(MAKE) run
 	$(DOCKER_COMPOSE) run --rm smtp_relay_test sh
 
 .PHONY: build
