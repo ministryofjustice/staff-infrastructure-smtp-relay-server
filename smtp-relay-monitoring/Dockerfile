@@ -1,4 +1,4 @@
-FROM unikum/postfix_exporter:latest
+FROM ghcr.io/hsn723/postfix_exporter:0.5.2
 
 VOLUME [ "/var/log/mail", "/var/spool/postfix" ]
 
