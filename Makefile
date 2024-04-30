@@ -7,7 +7,7 @@ CURRENT_TIME := `date "+%Y.%m.%d-%H.%M.%S"`
 LOCAL_IMAGE := ministryofjustice/nvvs/terraforms:latest
 DOCKER_IMAGE := ghcr.io/ministryofjustice/nvvs/terraforms:latest
 
-DOCKER_RUN_IT := @docker run --rm -it \
+DOCKER_RUN := @docker run --rm -it \
 				--env-file <(aws-vault exec $$AWS_PROFILE -- env | grep ^AWS_) \
 				-v `pwd`:/data \
 				--workdir /data \
@@ -19,23 +19,25 @@ export DOCKER_DEFAULT_PLATFORM=linux/amd64
 -include .env
 export
 
+.DEFAULT_GOAL := help
+
 DOCKER_COMPOSE = docker-compose -f docker-compose.yml
 
 .PHONY: authenticate-docker
-authenticate-docker: ## authenticate with repository
+authenticate-docker: ## Authenticate docker using ssm paramstore
 	./scripts/authenticate_docker.sh
 
 .PHONY: build-dev
-build-dev: ## build-dev containers
+build-dev:## Build dev image
 	$(DOCKER_COMPOSE) build
 
 .PHONY: run
-run: ## run smtp_relay_server
+run: ## Build dev container and start smtp relay server container
 	$(MAKE) build-dev
 	$(DOCKER_COMPOSE) up -d smtp_relay_server
 
 .PHONY: test
-test: ## run tests
+test: ## Build dev container, start smtp relay server container, run tests
 	$(MAKE) run
 	$(DOCKER_COMPOSE) up -d smtp_relay_test
 
@@ -45,39 +47,39 @@ test-shell: ## shell into test container
 	$(DOCKER_COMPOSE) run --rm smtp_relay_test sh
 
 .PHONY: build
-build: ## build smtp-relay container
-	docker build -t docker_smtp_relay ./smtp-relay
+build: ## Docker build smtp-relay container
+	docker build --platform=linux/amd64 -t docker_smtp_relay ./smtp-relay
 
 .PHONY: build-nginx
-build-nginx: ## build nginx container
-	docker build -t nginx ./nginx
+build-nginx: ## Docker build nginx container
+	docker build --platform=linux/amd64 -t nginx ./nginx
 
 .PHONY: build-postfix-exporter
-build-postfix-exporter: ## build smtp-relay-monitoring postfix-exporter container
-	docker build -t docker_smtp_relay_monitoring ./smtp-relay-monitoring
+build-postfix-exporter: ## Docker build postfix-exporter(smtp relay monitoring) container
+	docker build --platform=linux/amd64 -t docker_smtp_relay_monitoring ./smtp-relay-monitoring
 
 .PHONY: push
-push: ## push smtp-relay container image
+push: ## Docker tag SMTP relay server container image with latest and push to ECR
 	echo ${REGISTRY_URL}
 	aws ecr get-login-password | docker login --username AWS --password-stdin ${REGISTRY_URL}
 	docker tag docker_smtp_relay:latest ${REGISTRY_URL}/staff-infrastructure-${ENV}-smtp-relay:latest
 	docker push ${REGISTRY_URL}/staff-infrastructure-${ENV}-smtp-relay:latest
 
 .PHONY: push-nginx
-push-nginx: ## push smtp-relay-nginx container image
+push-nginx: ## Docker tag smtp-relay-nginx container image with latest and push to ECR
 	aws ecr get-login-password | docker login --username AWS --password-stdin ${REGISTRY_URL}
 	docker tag nginx:latest ${REGISTRY_URL}/staff-infrastructure-${ENV}-smtp-relay-nginx:latest
 	docker push ${REGISTRY_URL}/staff-infrastructure-${ENV}-smtp-relay-nginx:latest
 
 .PHONY: push-postfix-exporter
-push-postfix-exporter: ## push smtp-relay-monitoring postfix-exporter container image
+push-postfix-exporter: ## Docker tag postfix-exporter(smtp relay monitoring) container image with latest and push to ECR
 	echo ${REGISTRY_URL}
 	aws ecr get-login-password | docker login --username AWS --password-stdin ${REGISTRY_URL}
 	docker tag docker_smtp_relay_monitoring:latest ${REGISTRY_URL}/staff-infrastructure-${ENV}-smtp-relay-monitoring:latest
 	docker push ${REGISTRY_URL}/staff-infrastructure-${ENV}-smtp-relay-monitoring:latest
 
 .PHONY: publish
-publish: ## publish container images
+publish: ## Build docker image, tag and push  smtp relay:latest, build nginx and postfix-exporter(smtp relay monitoring) image, tag with latest and push
 	$(MAKE) build
 	$(MAKE) push
 	$(MAKE) build-nginx
@@ -86,7 +88,7 @@ publish: ## publish container images
 	$(MAKE) push-postfix-exporter
 
 .PHONY: deploy
-deploy: ## stop
+deploy: ## deploy - zero downtime phased deployment in ECS
 	aws-vault exec $$AWS_VAULT_PROFILE --no-session -- ./scripts/deploy.sh
 
 .PHONY: stop

@@ -7,6 +7,7 @@ volumes:
 
 services:
     smtp_relay_server:
+        platform: linux/amd64
         build:
             context: ./smtp-relay
         environment:
@@ -26,6 +27,7 @@ services:
             unknown:
                 ipv4_address: 172.16.1.10
     smtp_relay_test:
+        platform: linux/amd64
         build:
             context: ./smtp-relay-test
         environment:
@@ -37,6 +39,7 @@ services:
             - known
             - unknown
     smtp_relay_monitoring:
+        platform: linux/amd64
         build:
             context: ./smtp-relay-monitoring
         volumes:
