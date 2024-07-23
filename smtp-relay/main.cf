@@ -1,0 +1,18 @@
+relayhost = [email-smtp.eu-west-2.amazonaws.com]:587
+smtp_sasl_auth_enable = yes
+smtp_sasl_security_options = noanonymous
+smtp_sasl_password_maps = lmdb:/etc/postfix/sasl_passwd
+smtp_tls_security_level = encrypt
+smtp_tls_note_starttls_offer = yes
+smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+
+# Restriction settings
+smtpd_relay_restrictions = permit_mynetworks, reject
+
+
+debug_peer_list = 192.168.65.1
+debug_peer_level = 3
+
+maillog_file = /var/log/mail/postfix
+
+mynetworks = 127.0.0.0/8, [::1]/128, 192.168.65.0/24, 192.168.65.1

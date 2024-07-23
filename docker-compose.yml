@@ -19,8 +19,11 @@ services:
         volumes:
             - postfix-logs:/var/log/mail
             - postfix-socket:/var/spool/postfix
+            - ./smtp-relay:/tmp/smtp-relay
         links:
             - smtp_relay_monitoring
+        ports:
+            - "25:25"
         networks:
             known:
                 ipv4_address: 172.16.0.10
