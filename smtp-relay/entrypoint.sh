@@ -15,17 +15,16 @@ mkdir -p /var/spool/postfix/pid
 
 mkdir /etc/postfix/sasl
 
-#cp /tmp/smtp-relay/sender_access /etc/postfix/sender_access
-#cp /tmp/smtp-relay/restricted_recipient_access /etc/postfix/restricted_recipient_access
+cp /tmp/smtp-relay/sender_access /etc/postfix/sender_access
+cp /tmp/smtp-relay/restricted_recipient_access /etc/postfix/restricted_recipient_access
 cp /tmp/smtp-relay/sasl_passwd /etc/postfix/sasl_passwd
 cp /tmp/smtp-relay/smtpd.conf /etc/postfix/sasl/smtpd.conf
 
-#cp /tmp/smtp-relay/master.cf /etc/postfix/master.cf
 cp /tmp/smtp-relay/main.cf /etc/postfix/main.cf
 chmod 600 /etc/postfix/sasl_passwd
 postmap /etc/postfix/sasl_passwd
-#postmap /etc/postfix/sender_access
-#postmap /etc/postfix/restricted_recipient_access
+postmap /etc/postfix/sender_access
+postmap /etc/postfix/restricted_recipient_access
 
 ## Disable SMTPUTF8, because libraries (ICU) are missing in Alpine
 #postconf -e "smtputf8_enable = no"

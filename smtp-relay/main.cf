@@ -6,12 +6,23 @@ smtp_tls_security_level = encrypt
 smtp_tls_note_starttls_offer = yes
 smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
 
+smtpd_recipient_restrictions =
+    check_sender_access lmdb:/etc/postfix/sender_access,
+    check_recipient_access lmdb:/etc/postfix/restricted_recipient_access,
+    permit_mynetworks,
+    permit_sasl_authenticated,
+    reject_unauth_destination
+
+smtpd_restriction_classes = restricted_recipients
+restricted_recipients = check_recipient_access lmdb:/etc/postfix/restricted_recipient_access, reject
+
+
 # Restriction settings
 smtpd_relay_restrictions = permit_mynetworks, reject
 
 
-debug_peer_list = 192.168.65.1
-debug_peer_level = 3
+#debug_peer_list = 192.168.65.1
+#debug_peer_level = 3
 
 maillog_file = /var/log/mail/postfix
 
