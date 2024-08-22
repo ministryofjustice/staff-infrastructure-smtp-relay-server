@@ -127,7 +127,7 @@ The SMTP service has no persistent data to restore in the event of disaster reco
 
 ## Prerequisites
 
-- Complete the prerequisites steps in the [Technical Guide](#technical-guide-).
+- Complete the prerequisites steps of this README's [Technical Guide](#prerequisites).
 - Access to the existing AWS account with [AWS BYOIP](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html) addresses in order to be able to send on mail to ExchangeOnline/GoogleWorkspace. If this is not possible the new Elastic Public IPs will need to be replaced on `mail-relay.staff.service.justice.gov.uk` PTR records within Route53 else mail delivery will fail.
 - If account has lost attachment to transit gateway then `push` access to the [transit gateway repo](https://github.com/ministryofjustice/deployment-tgw).
 
@@ -139,4 +139,4 @@ Deploy the underlying AWS infrastructure by following the [How to deploy the Inf
 
 
 ### 2. Restore the SMTP Relay Server
-Once the AWS infrastructure is deployed, restore the SMTP Relay Server container into ECS Fargate by following the steps in the [Technical Guide](#technical-guide-).
+Once the AWS infrastructure is deployed, restore the SMTP Relay Server container into ECS Fargate by following the steps of this README's [Technical Guide](https://github.com/ministryofjustice/staff-infrastructure-smtp-relay-server#technical-guide).
