@@ -34,7 +34,7 @@ This repository builds the docker image for SMTP Relay server only. Here are som
 - [staff-device-shared-services-infrastructure](https://github.com/ministryofjustice/staff-device-shared-services-infrastructure)  
 - [staff-infrastructure-network-services](https://github.com/ministryofjustice/staff-infrastructure-network-services)
 
-## Technical Guide  
+### Technical Guide  
 
 Once you have deployed the infrastructure, you may use this guide to build and push the SMTP Relay server image.  
 
@@ -55,8 +55,12 @@ To be able to follow this guide, you need to have the following already:
 ### Prepare the variables  
 
 1. Clone this repo to a local directory.  
-1. Copy `.env.example` to `.env`.  
-1. Modify the `.env` file and replace all placeholders with correct values.  
+1. Generate `.env` file with the required values for the environment automatically using make script:  
+```bash
+make gen-env
+```  
+
+
 
 ### Authenticate Docker with AWS ECR
 
@@ -119,11 +123,11 @@ make stop
 
 *In the event of disaster recovery for the SMTP Relay Server it is recommended to roll forward with a fix than to roll back. If a rollback is still required, follow the steps in this guide*
 
-The SMTP service has no persistent data which means that the code which is stored in the repositories is all that is needed to bring the service back online.
+The SMTP service has no persistent data to restore in the event of disaster recovery as it is relaying emails from one destination to another. The configuration for the SMTP Relay Server is stored as parameters in Systems Manager (SSM) Parameter store and set in the various places it is required as defined in the terraform code. As a result the code which is stored in the repositories is all that is needed to bring the service back online.
 
 ## Prerequisites
 
-- Complete the prerequisites steps [here](https://github.com/ministryofjustice/staff-infrastructure-smtp-relay-server#prerequisites)
+- Complete the prerequisites steps in the [Technical Guide](#technical-guide-).
 - Access to the existing AWS account with [AWS BYOIP](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html) addresses in order to be able to send on mail to ExchangeOnline/GoogleWorkspace. If this is not possible the new Elastic Public IPs will need to be replaced on `mail-relay.staff.service.justice.gov.uk` PTR records within Route53 else mail delivery will fail.
 - If account has lost attachment to transit gateway then `push` access to the [transit gateway repo](https://github.com/ministryofjustice/deployment-tgw).
 
@@ -134,5 +138,5 @@ In the event that Grafana has alerted on a disaster scenario, follow the steps b
 Deploy the underlying AWS infrastructure by following the [How to deploy the Infrastructure](https://github.com/ministryofjustice/staff-infrastructure-network-services/blob/main/documentation/how-to-deploy-the-infrastructure.md) guide.
 
 
-### 2. Restore the postfix server
-Once the AWS infrastructure is deployed, restore the Postfix SMTP server container into ECS Fargate by following the [Deploy SMTP Relay Server](https://github.com/ministryofjustice/staff-infrastructure-smtp-relay-server) guide.
+### 2. Restore the SMTP Relay Server
+Once the AWS infrastructure is deployed, restore the SMTP Relay Server container into ECS Fargate by following the steps in the [Technical Guide](#technical-guide-).
