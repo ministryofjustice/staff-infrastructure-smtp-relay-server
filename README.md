@@ -65,9 +65,10 @@ To be able to follow this guide, you need to have the following already:
 
 ### Prepare the environment variables  
 
+1. Clone this repo to a local directory.
+
 The configuration/environment variables for running and building the SMTP Relay Server container are automatically populated through utilisation of the generate-env-file.sh script which is executed when using the 'make gen-env' command.
 
-1. Clone this repo to a local directory.  
 1. Generate `.env` file with the required values for the environment automatically, run:  
 ```bash
 make gen-env
@@ -87,7 +88,7 @@ make authenticate-docker
 
 ### Build the image  
 
-4. To build the image on your local docker, run:  
+3. To build the image on your local docker, run:  
 
 ```shell
 make build-dev
@@ -95,7 +96,7 @@ make build-dev
 
 ### Run the server locally  
 
-5. To run the SMTP Relay server on your local docker, run:  
+4. To run the SMTP Relay server on your local docker, run:  
 
 ```shell
 make run
@@ -103,7 +104,7 @@ make run
 
 ### Test locally  
 
-6. To test the build locally, run:  
+5. To test the build locally, run:  
 
 ```shell
 make test
@@ -111,7 +112,7 @@ make test
 
 ### Push your docker image  
 
-7. To push the built image on to your isolated ECR repository, run:  
+6. To push the built image on to your isolated ECR repository, run:  
 
 ```shell  
 make publish  
