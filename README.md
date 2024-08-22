@@ -78,7 +78,7 @@ make build-dev
 
 ### Run the server locally  
 
-4. To run the SMTP Relay server on your local docker, run:  
+5. To run the SMTP Relay server on your local docker, run:  
 
 ```shell
 make run
@@ -86,7 +86,7 @@ make run
 
 ### Test locally  
 
-5. To test the build locally, run:  
+6. To test the build locally, run:  
 
 ```shell
 make test
@@ -94,7 +94,7 @@ make test
 
 ### Push your docker image  
 
-6. To push the built image on to your isolated ECR repository, run:  
+7. To push the built image on to your isolated ECR repository, run:  
 
 ```shell  
 make publish  
@@ -117,13 +117,13 @@ make stop
 
 # SMTP Relay disaster recovery
 
-*It is recommended to roll forward with a fix than to roll back. If a rollback is still required, follow the steps in this guide*
+*In the event of disaster recovery for the SMTP Relay Server it is recommended to roll forward with a fix than to roll back. If a rollback is still required, follow the steps in this guide*
 
 The SMTP service has no persistent data which means that the code which is stored in the repositories is all that is needed to bring the service back online.
 
 ## Prerequisites
 
-- Complete the prerequisites [here](https://github.com/ministryofjustice/staff-infrastructure-smtp-relay-server#prerequisites)
+- Complete the prerequisites steps [here](https://github.com/ministryofjustice/staff-infrastructure-smtp-relay-server#prerequisites)
 - Access to the existing AWS account with [AWS BYOIP](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html) addresses in order to be able to send on mail to ExchangeOnline/GoogleWorkspace. If this is not possible the new Elastic Public IPs will need to be replaced on `mail-relay.staff.service.justice.gov.uk` PTR records within Route53 else mail delivery will fail.
 - If account has lost attachment to transit gateway then `push` access to the [transit gateway repo](https://github.com/ministryofjustice/deployment-tgw).
 
