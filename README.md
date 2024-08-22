@@ -4,7 +4,10 @@
 
 ## Introduction  
 
-This repository builds the docker image for the SMTP Relay Server and pushes it to the Shared Services Elastic Container Repository, so that the pre-configured ECS task can pull down this image and launch a new container.  
+This repository builds the docker image for the SMTP Relay Server and pushes it to the Shared Services Elastic Container Repository, so that the pre-configured ECS task can pull down this image and launch a new container. 
+
+This repository depends on the network services infrastructure repository, which builds the underlying base infrastructure with required ECR repository and ECS service definitions to work with this docker image.
+
 
 
 
@@ -35,10 +38,6 @@ Here is a diagram:
 [Diagram source](diagrams/staff-infrastructure-network-services-architecture.drawio)
 
 
-## 
-
-This repository depends on the network services infrastructure repository, which builds the underlying base infrastructure with required ECR repository and ECS service definitions to work with this docker image.  
-
 ## Related Repositories  
 
 This repository builds the docker image for SMTP Relay server only. Here are some of the other related repositories:  
@@ -67,7 +66,7 @@ To be able to follow this guide, you need to have the following already:
 ### Prepare the variables  
 
 1. Clone this repo to a local directory.  
-1. Generate `.env` file with the required values for the environment automatically using make script:  
+1. Generate `.env` file with the required values for the environment automatically, run:  
 ```bash
 make gen-env
 ```  
@@ -130,6 +129,7 @@ Once you have finished using the docker image, to shut down the environment, run
 make stop  
 ```  
 
+###
 
 # SMTP Relay Disaster Recovery
 
@@ -147,8 +147,8 @@ The SMTP service has no persistent data to restore in the event of disaster reco
 In the event that Grafana has alerted on a disaster scenario, follow the steps below to restore service.
 
 ### 1. Restore the ECS infrastructure
-Deploy the underlying AWS infrastructure by following the [How to deploy the Infrastructure](https://github.com/ministryofjustice/staff-infrastructure-network-services/blob/main/documentation/how-to-deploy-the-infrastructure.md) guide.
+Deploy the underlying AWS infrastructure required for the SMTP Relay Server by following the [How to deploy the Infrastructure](https://github.com/ministryofjustice/staff-infrastructure-network-services/blob/main/documentation/how-to-deploy-the-infrastructure.md) guide.
 
 
 ### 2. Restore the SMTP Relay Server
-Once the AWS infrastructure is deployed, restore the SMTP Relay Server container into ECS Fargate by following the steps of this README's [Technical Guide](#technical-guide).
+Once the AWS infrastructure is deployed proceed to Build, Run, Test, Publish (to ECR) and Deploy/Restore the SMTP Relay Server container into ECS Fargate by following the steps of this README's [Technical Guide](#technical-guide).
