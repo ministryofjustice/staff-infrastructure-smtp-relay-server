@@ -7,13 +7,25 @@
 This repository builds the docker image for the SMTP Relay Server and pushes it to the Shared Services Elastic Container Repository, so that the pre-configured ECS task can pull down this image and launch a new container.  
 
 
+
+## Documentation:
+
+- [SMTP Relay Server](#smtp-relay-server)
+- [High Level Architecture](#high-level-architecture)
+- [Related Repositories ](#related-repositories-)
+- [Technical Guide](#technical-guide-)
+- [SMTP Relay Disaster Recovery](#smtp-relay-disaster-recovery)
+
+
+
+
 ## SMTP Relay Server
 
 The SMTP Relay Server enables devices which are unable to use authentication to use unauthenticated SMTP to send email.
 
 Currently, printers and a few legacy applications from various MoJ HQ sites are using this SMTP relay service via the Transit Gateway to send emails to both justice and digital domains.
 
-### High Level Architecture
+## High Level Architecture
 
 This service consists of an AWS ECS cluster running two instances of SMTP Relay Server containers with postfix image in two availibilty zones in London region. Two load balancers from those two availibility zones are there to accept incoming requests from clients via the Transit gateway and then to distribute the requests to those SMTP Relay Server containers. This provides high availibility and resiliency to the service.
 
@@ -119,13 +131,13 @@ make stop
 ```  
 
 
-# SMTP Relay disaster recovery
+# SMTP Relay Disaster Recovery
 
 *In the event of disaster recovery for the SMTP Relay Server it is recommended to roll forward with a fix than to roll back. If a rollback is still required, follow the steps in this guide*
 
 The SMTP service has no persistent data to restore in the event of disaster recovery as it is relaying emails from one destination to another. The configuration for the SMTP Relay Server is stored as parameters in Systems Manager (SSM) Parameter store and set in the various places it is required as defined in the terraform code. As a result the code which is stored in the repositories is all that is needed to bring the service back online.
 
-## Prerequisites
+## Disaster Recovery Prerequisites
 
 - Complete the prerequisites steps of this README's [Technical Guide](https://github.com/ministryofjustice/staff-infrastructure-smtp-relay-server#technical-guide).
 - Access to the existing AWS account with [AWS BYOIP](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html) addresses in order to be able to send on mail to ExchangeOnline/GoogleWorkspace. If this is not possible the new Elastic Public IPs will need to be replaced on `mail-relay.staff.service.justice.gov.uk` PTR records within Route53 else mail delivery will fail.
