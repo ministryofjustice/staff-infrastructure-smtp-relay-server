@@ -63,7 +63,9 @@ To be able to follow this guide, you need to have the following already:
 |:-----|  
 | You may configure your AWS Vault to use AWS SSO. A [step-by-step guide](https://ministryofjustice.github.io/cloud-operations/documentation/team-guide/best-practices/use-aws-sso.html#re-configure-aws-vault) can be found in our team documentation site. |  
 
-### Prepare the variables  
+### Prepare the environment variables  
+
+The configuration/environment variables for running and building the SMTP Relay Server container is automatically populated through utilisation of the generate-env-file.sh script which is executed when using the 'make gen-env' script.
 
 1. Clone this repo to a local directory.  
 1. Generate `.env` file with the required values for the environment automatically, run:  
@@ -151,4 +153,4 @@ Deploy the underlying AWS infrastructure required for the SMTP Relay Server by f
 
 
 ### 2. Restore the SMTP Relay Server
-Once the AWS infrastructure is deployed proceed to Build, Run, Test, Publish (to ECR) and Deploy/Restore the SMTP Relay Server container into ECS Fargate by following the steps of this README's [Technical Guide](#technical-guide).
+Once the underlying AWS infrastructure is deployed proceed to Build, Run, Test, Publish (to ECR) and Deploy/Restore the SMTP Relay Server container into ECS Fargate by following the steps of this README's [Technical Guide](#technical-guide).
