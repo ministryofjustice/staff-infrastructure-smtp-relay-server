@@ -151,4 +151,4 @@ Deploy the underlying AWS infrastructure by following the [How to deploy the Inf
 
 
 ### 2. Restore the SMTP Relay Server
-Once the AWS infrastructure is deployed, restore the SMTP Relay Server container into ECS Fargate by following the steps of this README's [Technical Guide](https://github.com/ministryofjustice/staff-infrastructure-smtp-relay-server#technical-guide).
+Once the AWS infrastructure is deployed, restore the SMTP Relay Server container into ECS Fargate by following the steps of this README's [Technical Guide](#technical-guide).
