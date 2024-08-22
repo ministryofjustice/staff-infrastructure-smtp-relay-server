@@ -4,7 +4,26 @@
 
 ## Introduction  
 
-This repository builds the docker image for the SMTP Relay server and pushes it to the Shared Services Elastic Container Repository, so that the pre-configured ECS task can pull down this image and launch a new container.  
+This repository builds the docker image for the SMTP Relay Server and pushes it to the Shared Services Elastic Container Repository, so that the pre-configured ECS task can pull down this image and launch a new container.  
+
+
+## SMTP Relay Server
+
+The SMTP Relay Server enables devices which are unable to use authentication to use unauthenticated SMTP to send email.
+
+Currently, printers and a few legacy applications from various MoJ HQ sites are using this SMTP relay service via the Transit Gateway to send emails to both justice and digital domains.
+
+### High Level Architecture
+
+This service consists of an AWS ECS cluster running two instances of SMTP Relay Server containers with postfix image in two availibilty zones in London region. Two load balancers from those two availibility zones are there to accept incoming requests from clients via the Transit gateway and then to distribute the requests to those SMTP Relay Server containers. This provides high availibility and resiliency to the service.
+
+Here is a diagram:
+
+![staff-infrastructure-network-services-architecture](diagrams/staff-infrastructure-network-services-architecture.png)  
+[Diagram source](diagrams/staff-infrastructure-network-services-architecture.drawio)
+
+
+## 
 
 This repository depends on the network services infrastructure repository, which builds the underlying base infrastructure with required ECR repository and ECS service definitions to work with this docker image.  
 
@@ -94,3 +113,26 @@ Once you have finished using the docker image, to shut down the environment, run
 ```shell  
 make stop  
 ```  
+
+
+# SMTP Relay disaster recovery
+
+*It is recommended to roll forward with a fix than to roll back. If a rollback is still required, follow the steps in this guide*
+
+The SMTP service has no persistent data which means that the code which is stored in the repositories is all that is needed to bring the service back online.
+
+## Prerequisites
+
+- Complete the prerequisites [here](https://github.com/ministryofjustice/staff-infrastructure-smtp-relay-server#prerequisites)
+- Access to the existing AWS account with [AWS BYOIP](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html) addresses in order to be able to send on mail to ExchangeOnline/GoogleWorkspace. If this is not possible the new Elastic Public IPs will need to be replaced on `mail-relay.staff.service.justice.gov.uk` PTR records within Route53 else mail delivery will fail.
+- If account has lost attachment to transit gateway then `push` access to the [transit gateway repo](https://github.com/ministryofjustice/deployment-tgw).
+
+## Recovering from a disaster
+In the event that Grafana has alerted on a disaster scenario, follow the steps below to restore service.
+
+### 1. Restore the ECS infrastructure
+Deploy the underlying AWS infrastructure by following the [How to deploy the Infrastructure](https://github.com/ministryofjustice/staff-infrastructure-network-services/blob/main/documentation/how-to-deploy-the-infrastructure.md) guide.
+
+
+### 2. Restore the postfix server
+Once the AWS infrastructure is deployed, restore the Postfix SMTP server container into ECS Fargate by following the [Deploy SMTP Relay Server](https://github.com/ministryofjustice/staff-infrastructure-smtp-relay-server) guide.
