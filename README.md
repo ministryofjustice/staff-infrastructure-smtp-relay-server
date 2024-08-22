@@ -12,8 +12,8 @@ This repository builds the docker image for the SMTP Relay Server and pushes it 
 
 - [SMTP Relay Server](#smtp-relay-server)
 - [High Level Architecture](#high-level-architecture)
-- [Related Repositories ](#related-repositories-)
-- [Technical Guide](#technical-guide-)
+- [Related Repositories ](#related-repositories)
+- [Technical Guide](#technical-guide)
 - [SMTP Relay Disaster Recovery](#smtp-relay-disaster-recovery)
 
 
