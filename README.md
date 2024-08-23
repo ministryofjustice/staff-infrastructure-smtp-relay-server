@@ -24,8 +24,15 @@ This repository depends on the network services infrastructure repository, which
 
 ## SMTP Relay Server
 
-The SMTP Relay Server enables devices which are unable to use authentication to use unauthenticated SMTP to send email.
 
+The Postfix SMTP Relay Server is a server-side application for routing and delivering mail. You can use Postfix to set up a local mail server, create a null-client mail relay, use a Postfix server as a destination for multiple domains, or choose an LDAP directory instead of files for lookups.
+
+The key features of using Postfix SMTP Relay Server:
+
+- Security features to protect against common email related threats
+- Customization options, including support for virtual domains and aliases
+
+The Postfix SMTP Relay Server enables devices which are unable to use authentication to use unauthenticated SMTP to send email.
 Currently, printers and a few legacy applications from various MoJ HQ sites are using this SMTP relay service via the Transit Gateway to send emails to both justice and digital domains.
 
 ## High Level Architecture
@@ -134,7 +141,7 @@ Once you have finished using the docker image, to shut down the environment, run
 make stop  
 ```  
 
-###
+##
 
 # SMTP Relay Disaster Recovery
 
