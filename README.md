@@ -30,7 +30,7 @@ Currently, printers and a few legacy applications from various MoJ HQ sites are 
 
 ## High Level Architecture
 
-This service consists of an AWS ECS cluster running two instances of SMTP Relay Server containers with postfix image in two availibilty zones in London region. Two load balancers from those two availibility zones are there to accept incoming requests from clients via the Transit gateway and then to distribute the requests to those SMTP Relay Server containers. This provides high availibility and resiliency to the service.
+The SMTP Relay Service runs within the Staff Infrastructure Network Services VPC.This service consists of an AWS ECS cluster running two instances of SMTP Relay Server containers with postfix image in two availibilty zones in London region. Two load balancers from those two availibility zones are there to accept incoming requests from clients via the Transit gateway and then to distribute the requests to those SMTP Relay Server containers. This provides high availibility and resiliency to the service.
 
 Here is a diagram:
 
