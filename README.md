@@ -155,4 +155,4 @@ Deploy the underlying AWS infrastructure required for the SMTP Relay Server by f
 
 
 ### 2. Restore the SMTP Relay Server
-Once the underlying AWS infrastructure is deployed proceed to Build, Run, Test, Publish (to ECR) and Deploy/Restore the SMTP Relay Server container into ECS Fargate by following the steps of this README's [Technical Guide](#technical-guide).
+Once the underlying AWS infrastructure is deployed proceed to restoring the SMTP Relay Server container into ECS Fargate by following the steps of this README's [Technical Guide](#technical-guide). This guide includes the necessary prerequisite steps and instructions for Building, Running, Testing, Publishing (to ECR) and Deploying/Restoring the SMTP Relay container into ECS. 
