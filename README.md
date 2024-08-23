@@ -63,9 +63,11 @@ To be able to follow this guide, you need to have the following already:
 |:-----|  
 | You may configure your AWS Vault to use AWS SSO. A [step-by-step guide](https://ministryofjustice.github.io/cloud-operations/documentation/team-guide/best-practices/use-aws-sso.html#re-configure-aws-vault) can be found in our team documentation site. |  
 
-### Prepare the environment variables  
+### Clone SMTP Relay Server Repo
 
-1. Clone this repo to a local directory.
+1. Clone the staff-infrastructure-smtp-relay-server to a local directory on your machine.
+
+### Prepare the Environment Variables  
 
 The configuration/environment variables for running and building the SMTP Relay Server container for the required environment are automatically populated through utilisation of the generate-env-file.sh script which is executed when using the 'make gen-env' command. With this approach the engineer can see what the values are and where they are stored. This helps to speed up the process in getting the SMTP Relay container deployed locally.
 
