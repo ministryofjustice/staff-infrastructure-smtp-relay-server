@@ -65,7 +65,7 @@ To be able to follow this guide, you need to have the following already:
 
 ### Clone SMTP Relay Server Repo
 
-1. Clone the staff-infrastructure-smtp-relay-server to a local directory on your machine.
+1. Clone the staff-infrastructure-smtp-relay-server repository to a local directory on your machine.
 
 ### Prepare the Environment Variables  
 
