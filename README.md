@@ -144,7 +144,6 @@ The SMTP service has no persistent data to restore in the event of disaster reco
 
 ## Disaster Recovery Prerequisites
 
-- Complete the prerequisites steps of this README's [Technical Guide](#technical-guide).
 - Access to the existing AWS account with [AWS BYOIP](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html) addresses in order to be able to send on mail to ExchangeOnline/GoogleWorkspace. If this is not possible the new Elastic Public IPs will need to be replaced on `mail-relay.staff.service.justice.gov.uk` PTR records within Route53 else mail delivery will fail.
 - If account has lost attachment to transit gateway then `push` access to the [transit gateway repo](https://github.com/ministryofjustice/deployment-tgw).
 
