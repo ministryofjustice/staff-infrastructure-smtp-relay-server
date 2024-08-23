@@ -150,9 +150,9 @@ The SMTP service has no persistent data to restore in the event of disaster reco
 ## Recovering from a disaster
 In the event that Grafana has alerted on a disaster scenario, follow the steps below to restore service.
 
-### 1. Restore/Deploy the ECS infrastructure
+### 1. Restore/ the ECS infrastructure
 Deploy the underlying AWS infrastructure required for the SMTP Relay Server by following the [How to deploy the Infrastructure](https://github.com/ministryofjustice/staff-infrastructure-network-services/blob/main/documentation/how-to-deploy-the-infrastructure.md) guide. This documentation covers steps for prerequisites, creating a terraform workspace and standing up the infrastructure. 
 
 
-### 2. Restore/Deploy the SMTP Relay Server
-Once Step 1 is complete and the underlying AWS infrastructure is deployed proceed to restoring the SMTP Relay Server container into ECS Fargate by following the steps of this README's [Technical Guide](#technical-guide). This guide includes the necessary prerequisite steps and instructions for Building, Running, Testing, Publishing (to ECR) and Deploying/Restoring the SMTP Relay container into ECS. 
+### 2. Restore the SMTP Relay Server
+Once Step 1 is complete and the underlying AWS infrastructure is deployed/restored proceed to restoring the SMTP Relay Server container into ECS Fargate by following the steps of this README's [Technical Guide](#technical-guide). This guide includes the necessary prerequisite steps and instructions for Building, Running, Testing, Publishing (to ECR) and Deploying/Restoring the SMTP Relay container into ECS. 
