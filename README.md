@@ -148,7 +148,7 @@ The SMTP service has no persistent data to restore in the event of disaster reco
 - If account has lost attachment to transit gateway then `push` access to the [transit gateway repo](https://github.com/ministryofjustice/deployment-tgw).
 
 ## Recovering from a disaster
-In the event that Grafana has alerted on a disaster scenario, follow the steps below to restore service.
+In the event that Grafana has alerted on a disaster scenario, follow the steps below to restore the STMP Relay service:
 
 ### 1. Restore/ the ECS infrastructure
 Deploy the underlying AWS infrastructure required for the SMTP Relay Server by following the [How to deploy the Infrastructure](https://github.com/ministryofjustice/staff-infrastructure-network-services/blob/main/documentation/how-to-deploy-the-infrastructure.md) guide. This documentation covers steps for prerequisites, creating a terraform workspace and standing up the infrastructure. 
