@@ -67,7 +67,7 @@ To be able to follow this guide, you need to have the following already:
 
 1. Clone this repo to a local directory.
 
-The configuration/environment variables for running and building the SMTP Relay Server container for the required environment are automatically populated through utilisation of the generate-env-file.sh script which is executed when using the 'make gen-env' command.
+The configuration/environment variables for running and building the SMTP Relay Server container for the required environment are automatically populated through utilisation of the generate-env-file.sh script which is executed when using the 'make gen-env' command. With this approach the engineer can see what the values are and where they are stored. This helps to speed up the process in getting the SMTP Relay container deployed locally.
 
 2. Generate `.env` file with the required values for the environment automatically, run:  
 ```bash
