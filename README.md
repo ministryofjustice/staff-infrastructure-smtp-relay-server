@@ -81,19 +81,7 @@ The configuration/environment variables for running and building the SMTP Relay 
 2. Generate `.env` file with the required values for the environment automatically, run:  
 ```bash
 make gen-env
-```  
-
-
-
-### Authenticate Docker with AWS ECR
-
-The Docker base image is stored in ECR. Prior to building the container you must authenticate Docker to the ECR registry. [Details can be found here](https://docs.aws.amazon.com/AmazonECR/latest/userguide/Registries.html#registry_auth).
-
-If you have [aws-vault](https://github.com/99designs/aws-vault#installing) configured with credentials for shared services, do the following to authenticate:
-
-```bash
-make authenticate-docker
-```  
+```
 
 ### Build the image  
 
