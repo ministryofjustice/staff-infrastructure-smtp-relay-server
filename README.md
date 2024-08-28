@@ -66,9 +66,9 @@ To be able to follow this guide, you need to have the following already:
 - Access to [Moj AWS SSO](https://moj.awsapps.com/start#/).  
 - [jq](https://stedolan.github.io/jq/download/) installed.
 
-| :tada: TIP |  
-|:-----|  
-| You may configure your AWS Vault to use AWS SSO. A [step-by-step guide](https://ministryofjustice.github.io/cloud-operations/documentation/team-guide/best-practices/use-aws-sso.html#re-configure-aws-vault) can be found in our team documentation site. |  
+| :tada: TIP                                                                                                             |  
+|:-----------------------------------------------------------------------------------------------------------------------|  
+| You may configure your AWS Vault to use AWS SSO. A [step-by-step guide](https://ministryofjustice.github.io/nvvs-devops/documentation/team-guide/best-practices/use-aws-sso.html#configure-aws-vault) can be found in our team documentation site. |  
 
 ### Clone SMTP Relay Server Repo
 
