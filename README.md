@@ -70,6 +70,20 @@ To be able to follow this guide, you need to have the following already:
 |:-----------------------------------------------------------------------------------------------------------------------|  
 | You may configure your AWS Vault to use AWS SSO. A [step-by-step guide](https://ministryofjustice.github.io/nvvs-devops/documentation/team-guide/best-practices/use-aws-sso.html#configure-aws-vault) can be found in our team documentation site. |  
 
+### Authenticating with DockerHub
+
+Local development shouldn't go over the download limits of Dockerhub.
+https://docs.docker.com/docker-hub/download-rate-limit/
+
+If these limits are encountered, authenticating with Docker is required:
+
+```
+export DOCKER_USERNAME=your-docker-hub-username
+export DOCKER_PASSWORD=your-docker-hub-password
+
+make authenticate-docker
+```
+
 ### Clone SMTP Relay Server Repo
 
 1. Clone the staff-infrastructure-smtp-relay-server repository to a local directory on your machine.
@@ -82,6 +96,7 @@ The configuration/environment variables for running and building the SMTP Relay 
 ```bash
 make gen-env
 ```
+
 
 ### Build the image  
 
@@ -135,7 +150,7 @@ make stop
 
 *In the event of disaster recovery for the SMTP Relay Server it is recommended to roll forward with a fix than to roll back. If a rollback is still required, follow the steps in this guide*
 
-The SMTP service has no persistent data to restore in the event of disaster recovery as it is relaying emails from one destination to another. The configuration for the SMTP Relay Server is stored as parameters in Systems Manager (SSM) Parameter store and set in the various places it is required as defined in the terraform code. As a result the code which is stored in the repositories is all that is needed to bring the service back online.
+The SMTP service has no persistent data to restore in the event of disaster recovery as it is relaying emails from one destination to another. The configuration for the SMTP Relay Server is stored as parameters in Systems Manager (SSM) Parameter store and set in the various places it is required as defined in the code. As a result the code which is stored in the repositories is all that is needed to bring the service back online.
 
 ## Disaster Recovery Prerequisites
 
