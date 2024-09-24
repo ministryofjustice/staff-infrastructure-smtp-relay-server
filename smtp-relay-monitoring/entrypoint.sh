@@ -9,7 +9,7 @@ if [ ! -f "$FILE" ]; then
 fi
 output_message() {
   while true; do
-    echo "Failed to Scrape, this is a test message"
+    echo "Failed to scrape, this is a test message"
     sleep 300  # Sleep for 5 minutes (300 seconds)
   done
 }
