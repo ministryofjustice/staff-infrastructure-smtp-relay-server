@@ -1,6 +1,13 @@
 version: 0.2
 
+env:
+  parameter-store:
+    DOCKER_USERNAME: "/moj-network-access-control/docker/username"
+    DOCKER_PASSWORD: "/moj-network-access-control/docker/password"
+    REGISTRY_URL: "/codebuild/pttp-ci-infrastructure-net-svcs-core-pipeline/$ENV/ecr/endpoint"
+
 phases:
-  install:
+  build:
     commands:
-      - echo noop
+      - make authenticate-docker
+      - make test
