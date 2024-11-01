@@ -32,7 +32,7 @@ services:
             context: ./smtp-relay-test
         environment:
             TEST_SENDER_EMAIL_ADDRESS: "testuser@devl.justice.gov.uk"
-            O365_TEST_RECIPIENT_EMAIL_ADDRESS: "${O365_TEST_RECIPIENT_EMAIL_ADDRESS}"
+            O365_TEST_RECIPIENT_EMAIL_ADDRESS: "sandhya.buddharaju@justice.gov.uk"
             GOOGLE_TEST_RECIPIENT_EMAIL_ADDRESS: "lanwifi-devops@digital.justice.gov.uk"
             OTHER_TEST_RECIPIENT_EMAIL_ADDRESS: "sandhyab1506@yahoo.com"
         networks:
