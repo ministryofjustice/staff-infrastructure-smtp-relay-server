@@ -4,8 +4,7 @@ env:
   variables:
     AWS_REGION: eu-west-2
   parameter-store:
-      ROLE_ARN: /codebuild/pttp-ci-infrastructure-core-pipeline/development/assume_role # tests hardcoded to only run in development
-  parameter-store:
+    ROLE_ARN: /codebuild/pttp-ci-infrastructure-core-pipeline/development/assume_role # tests hardcoded to only run in development
     DOCKER_USERNAME: "/moj-network-access-control/docker/username"
     DOCKER_PASSWORD: "/moj-network-access-control/docker/password"
 
