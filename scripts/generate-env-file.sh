@@ -64,11 +64,11 @@ AWS_VAULT_PROFILE=mojo-shared-services-cli
 ENV=${ENV}
 
 ## These values need to be added manually
-TEST_SENDER_EMAIL_ADDRESS=testuser@devl.justice.gov.uk
+TEST_SENDER_EMAIL_ADDRESS=<any-email-address-in-devl-domain>
 
-O365_TEST_RECIPIENT_EMAIL_ADDRESS=sandhya.buddharaju@justrice.gov.uk
-GOOGLE_TEST_RECIPIENT_EMAIL_ADDRESS=lanwifi-devops@digital.justice.gov.uk
-OTHER_TEST_RECIPIENT_EMAIL_ADDRESS=sandhyab1506@yahoo.com
+O365_TEST_RECIPIENT_EMAIL_ADDRESS=<any-mailbox-to-recieve-test-email-in-justice-domain>
+GOOGLE_TEST_RECIPIENT_EMAIL_ADDRESS=<any-mailbox-to-recieve-test-email-in-digital>
+OTHER_TEST_RECIPIENT_EMAIL_ADDRESS=<any-email-address-other-than-digital-and-justice-domain>
 
 ## These values below are retrieved from the AWS Parameter Store
 EOF

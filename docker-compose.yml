@@ -13,9 +13,9 @@ services:
         environment:
             ENV: "${ENV}"
             PUBLIC_DNS_ZONE_NAME_STAFF_SERVICE: "${PUBLIC_DNS_ZONE_NAME_STAFF_SERVICE}"
-            RELAY_DOMAIN: "${RELAY_DOMAIN}"
-            O365_SMART_HOST: "${O365_SMART_HOST}"
-            IP_ALLOWED_LIST: "${IP_ALLOWED_LIST}"
+            RELAY_DOMAIN: "devl.justice.gov.uk"
+            O365_SMART_HOST: "devl-justice-gov-uk.mail.protection.outlook.com"
+            IP_ALLOWED_LIST: "127.0.0.0/8,172.16.0.0/24,13.40.249.195/32,10.180.104.0/22"
         volumes:
             - postfix-logs:/var/log/mail
             - postfix-socket:/var/spool/postfix
@@ -31,10 +31,10 @@ services:
         build:
             context: ./smtp-relay-test
         environment:
-            TEST_SENDER_EMAIL_ADDRESS: "${TEST_SENDER_EMAIL_ADDRESS}"
+            TEST_SENDER_EMAIL_ADDRESS: "testuser@devl.justice.gov.uk"
             O365_TEST_RECIPIENT_EMAIL_ADDRESS: "${O365_TEST_RECIPIENT_EMAIL_ADDRESS}"
-            GOOGLE_TEST_RECIPIENT_EMAIL_ADDRESS: "${GOOGLE_TEST_RECIPIENT_EMAIL_ADDRESS}"
-            OTHER_TEST_RECIPIENT_EMAIL_ADDRESS: "${OTHER_TEST_RECIPIENT_EMAIL_ADDRESS}"
+            GOOGLE_TEST_RECIPIENT_EMAIL_ADDRESS: "lanwifi-devops@digital.justice.gov.uk"
+            OTHER_TEST_RECIPIENT_EMAIL_ADDRESS: "sandhyab1506@yahoo.com"
         networks:
             - known
             - unknown
