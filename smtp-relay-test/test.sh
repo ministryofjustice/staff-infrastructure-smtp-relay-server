@@ -1,12 +1,13 @@
 #!/bin/bash
 set -e
+set -x
 
-smtp_relay_client_known_from_range="172.16.0.10"
+smtp_relay_client_known_from_range="10.180.104.100"
 smtp_relay_client_unknown_from_range="172.16.1.10"
 
 test_o365_relay() {
     echo "Starting o365 relay test "
-    echo "This is a Test Email from SMTP Relay Server" | mail -s "Test email from SMTP Relay Server" -S mta=smtp://$1 -S from=$TEST_SENDER_EMAIL_ADDRESS -S smtp-auth=none $O365_TEST_RECIPIENT_EMAIL_ADDRESS
+    echo "This is a Test Email from SMTP Relay Server" | mail -v -s "Test email from SMTP Relay Server" -S mta=smtp://$1 -S from=$TEST_SENDER_EMAIL_ADDRESS -S smtp-auth=none $O365_TEST_RECIPIENT_EMAIL_ADDRESS
 }
 
 test_google_relay(){
@@ -21,7 +22,7 @@ main() {
 
     echo "Starting main ..."
     echo $1
-    test_o365_relay "10.180.104.100"
+    test_o365_relay $1
     test_google_relay $1
     test_other_relay $1
 }
