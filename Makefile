@@ -39,7 +39,7 @@ run: ## Build dev container and start smtp relay server container
 .PHONY: test
 test: ## Build dev container, start smtp relay server container, run tests
 	$(MAKE) run
-	$(DOCKER_COMPOSE) up -d smtp_relay_test --verbose
+	$(DOCKER_COMPOSE) up -d smtp_relay_test
 	$(DOCKER_COMPOSE) logs smtp_relay_test
 
 .PHONY: test-shell
