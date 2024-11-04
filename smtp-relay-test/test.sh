@@ -21,7 +21,7 @@ main() {
 
     echo "Starting main ..."
     echo $1
-    test_o365_relay $1
+    test_o365_relay "10.180.104.100"
     test_google_relay $1
     test_other_relay $1
 }
