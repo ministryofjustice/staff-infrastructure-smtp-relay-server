@@ -12,6 +12,5 @@ phases:
   build:
     commands:
       - make authenticate-docker
-      - make publish
       - make test
       - echo tests completed sucessfully
