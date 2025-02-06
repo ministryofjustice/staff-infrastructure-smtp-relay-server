@@ -33,7 +33,10 @@ deploy() {
   
     # Wait for the ECS service to stabilize (reach steady state) add --max-wait 600 to cap at 10 mins?
   echo "Waiting for ECS service $service_name to reach steady state..."
-  aws ecs wait services-stable --cluster "$cluster_name" --services "$service_name"
+  
+  AWS_ACCESS_KEY_ID=$aws_access_key_id AWS_SECRET_ACCESS_KEY=$aws_secret_access_key AWS_SESSION_TOKEN=$aws_session_token aws ecs wait services-stable \
+    --cluster "$cluster_name" \
+    --services "$service_name"
 
   if [ $? -eq 0 ]; then
     echo "ECS service $service_name has reached steady state."
