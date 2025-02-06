@@ -30,6 +30,18 @@ deploy() {
     --cluster $cluster_name \
     --service $service_name \
     --force-new-deployment
+  
+    # Wait for the ECS service to stabilize (reach steady state) add --max-wait 600 to cap at 10 mins?
+  echo "Waiting for ECS service $service_name to reach steady state..."
+  aws ecs wait services-stable --cluster "$cluster_name" --services "$service_name"
+
+  if [ $? -eq 0 ]; then
+    echo "ECS service $service_name has reached steady state."
+  else
+    echo "ECS service $service_name failed to reach steady state."
+    exit 1
+  fi
+
 }
 
 main() {
